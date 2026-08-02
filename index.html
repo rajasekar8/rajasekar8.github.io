@@ -4,263 +4,138 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rajasekar M — Infrastructure & AIOps Architect</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0e17;--bg2:#111827;--bg3:#1a2235;--bg4:#0f1729;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e2e8f0;--muted:#64748b;--muted2:#94a3b8;
+  --accent:#38bdf8;--accent2:#818cf8;--accent3:#34d399;--warn:#fb923c;--pink:#f472b6;
+  --sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
 
-  :root {
-    --bg:        #0a0e17;
-    --bg2:       #111827;
-    --bg3:       #1a2235;
-    --border:    rgba(255,255,255,0.07);
-    --border2:   rgba(255,255,255,0.13);
-    --text:      #e2e8f0;
-    --muted:     #64748b;
-    --accent:    #38bdf8;
-    --accent2:   #818cf8;
-    --accent3:   #34d399;
-    --warn:      #fb923c;
-    --mono:      'JetBrains Mono', monospace;
-    --sans:      'Inter', sans-serif;
-  }
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;background:rgba(10,14,23,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--accent);letter-spacing:.04em}
+.nav-links{display:flex;gap:1.75rem}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
 
-  html { scroll-behavior: smooth; }
+.hero{min-height:100vh;display:flex;align-items:center;padding:5rem 2rem 3rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 65% 35%,rgba(56,189,248,0.07) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 15% 75%,rgba(129,140,248,0.06) 0%,transparent 60%);pointer-events:none}
+.hero-inner{max-width:960px;margin:0 auto;width:100%}
+.eyebrow{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--accent)}
+h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:600;line-height:1.1;letter-spacing:-.03em;margin-bottom:1.5rem}
+h1 .dim{color:var(--muted);font-weight:300}
+h1 .hl{color:var(--accent)}
+.hero-desc{font-size:1.05rem;color:var(--muted2);max-width:600px;line-height:1.8;margin-bottom:2rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
+.tag{font-family:var(--mono);font-size:11px;font-weight:500;padding:4px 10px;border-radius:4px;letter-spacing:.04em;border:1px solid}
+.t-blue{color:var(--accent);border-color:rgba(56,189,248,.25);background:rgba(56,189,248,.06)}
+.t-purple{color:var(--accent2);border-color:rgba(129,140,248,.25);background:rgba(129,140,248,.06)}
+.t-green{color:var(--accent3);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.06)}
+.t-orange{color:var(--warn);border-color:rgba(251,146,60,.25);background:rgba(251,146,60,.06)}
+.t-pink{color:var(--pink);border-color:rgba(244,114,182,.25);background:rgba(244,114,182,.06)}
+.hero-btns{display:flex;flex-wrap:wrap;gap:.75rem}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#0a0e17}.btn-primary:hover{background:#7dd3fc}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border2)}.btn-ghost:hover{background:var(--bg3)}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-  }
+section{padding:5rem 2rem}
+.inner{max-width:960px;margin:0 auto}
+.sec-label{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+h2{font-size:1.75rem;font-weight:600;letter-spacing:-.02em;margin-bottom:2.5rem}
 
-  /* ── Nav ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2rem; height: 56px;
-    background: rgba(10,14,23,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: var(--mono); font-size: 13px; font-weight: 500;
-    color: var(--accent); letter-spacing: .04em;
-  }
-  .nav-links { display: flex; gap: 1.75rem; }
-  .nav-links a {
-    font-size: 13px; color: var(--muted); text-decoration: none;
-    transition: color .2s;
-  }
-  .nav-links a:hover { color: var(--text); }
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:3.5rem}
+.stat{background:var(--bg2);padding:1.5rem 1.25rem}
+.stat-num{font-size:2rem;font-weight:600;color:var(--text);letter-spacing:-.04em}
+.stat-num .u{font-size:1rem;color:var(--accent);margin-left:2px}
+.stat-lbl{font-size:12px;color:var(--muted);margin-top:2px}
 
-  /* ── Hero ── */
-  .hero {
-    min-height: 100vh; display: flex; align-items: center;
-    padding: 5rem 2rem 3rem;
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(56,189,248,0.06) 0%, transparent 70%),
-                radial-gradient(ellipse 50% 40% at 20% 80%, rgba(129,140,248,0.05) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .hero-inner { max-width: 900px; margin: 0 auto; width: 100%; }
-  .hero-eyebrow {
-    font-family: var(--mono); font-size: 12px; color: var(--accent);
-    letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1.5rem;
-    display: flex; align-items: center; gap: .75rem;
-  }
-  .hero-eyebrow::before {
-    content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
-  }
-  h1 {
-    font-size: clamp(2.4rem, 6vw, 4rem);
-    font-weight: 600; line-height: 1.1; letter-spacing: -.03em;
-    margin-bottom: 1.5rem;
-  }
-  h1 .dim { color: var(--muted); font-weight: 300; }
-  h1 .hl  { color: var(--accent); }
-  .hero-desc {
-    font-size: 1.05rem; color: var(--muted); max-width: 560px;
-    line-height: 1.8; margin-bottom: 2.5rem;
-  }
-  .hero-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 3rem; }
-  .tag {
-    font-family: var(--mono); font-size: 11px; font-weight: 500;
-    padding: 4px 10px; border-radius: 4px; letter-spacing: .04em;
-    border: 1px solid;
-  }
-  .tag-blue  { color: var(--accent);  border-color: rgba(56,189,248,.25);  background: rgba(56,189,248,.06); }
-  .tag-purple{ color: var(--accent2); border-color: rgba(129,140,248,.25); background: rgba(129,140,248,.06); }
-  .tag-green { color: var(--accent3); border-color: rgba(52,211,153,.25);  background: rgba(52,211,153,.06); }
-  .tag-orange{ color: var(--warn);    border-color: rgba(251,146,60,.25);  background: rgba(251,146,60,.06); }
+/* ── Feature highlight box ── */
+.feature-highlight{background:linear-gradient(135deg,rgba(56,189,248,0.05),rgba(129,140,248,0.05));border:1px solid rgba(56,189,248,0.15);border-radius:12px;padding:2rem;margin-bottom:2rem}
+.fh-title{font-size:1.1rem;font-weight:600;color:var(--accent);margin-bottom:.5rem}
+.fh-desc{font-size:13px;color:var(--muted2);line-height:1.75}
 
-  .hero-btns { display: flex; flex-wrap: wrap; gap: .75rem; }
-  .btn {
-    display: inline-flex; align-items: center; gap: .4rem;
-    padding: 10px 20px; border-radius: 6px; font-size: 13px;
-    font-weight: 500; text-decoration: none; transition: all .2s; cursor: pointer;
-    border: 1px solid transparent;
-  }
-  .btn-primary {
-    background: var(--accent); color: #0a0e17;
-  }
-  .btn-primary:hover { background: #7dd3fc; }
-  .btn-secondary {
-    background: transparent; color: var(--text);
-    border-color: var(--border2);
-  }
-  .btn-secondary:hover { background: var(--bg3); border-color: rgba(255,255,255,.2); }
+/* ── Integration cards ── */
+.integrations{display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:1.25rem;margin-bottom:2rem}
+.int-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s,transform .2s}
+.int-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.int-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+.int-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.int-name{font-size:14px;font-weight:600}
+.int-sub{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.int-body{padding:1rem 1.25rem}
+.feat-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.feat-list li{font-size:12.5px;color:var(--muted2);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5}
+.feat-list li::before{content:'→';color:var(--accent);flex-shrink:0;font-family:var(--mono);font-size:11px;margin-top:2px}
 
-  /* ── Section ── */
-  section { padding: 5rem 2rem; }
-  .section-inner { max-width: 900px; margin: 0 auto; }
-  .section-label {
-    font-family: var(--mono); font-size: 11px; color: var(--accent);
-    letter-spacing: .1em; text-transform: uppercase; margin-bottom: .75rem;
-  }
-  h2 { font-size: 1.75rem; font-weight: 600; letter-spacing: -.02em; margin-bottom: 3rem; }
+/* ── Advanced features ── */
+.adv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:2.5rem}
+.adv-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem;transition:border-color .2s}
+.adv-card:hover{border-color:var(--border2)}
+.adv-icon{font-size:20px;margin-bottom:.6rem}
+.adv-title{font-size:13.5px;font-weight:600;margin-bottom:.4rem;color:var(--text)}
+.adv-desc{font-size:12px;color:var(--muted);line-height:1.65}
+.adv-badge{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:3px;margin-top:.5rem;border:1px solid}
 
-  /* ── Stats ── */
-  .stats-row {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1px; background: var(--border); border: 1px solid var(--border);
-    border-radius: 10px; overflow: hidden; margin-bottom: 4rem;
-  }
-  .stat {
-    background: var(--bg2); padding: 1.5rem 1.25rem;
-    display: flex; flex-direction: column; gap: .25rem;
-  }
-  .stat-num { font-size: 1.9rem; font-weight: 600; color: var(--text); letter-spacing: -.03em; }
-  .stat-lbl { font-size: 12px; color: var(--muted); }
-  .stat-num .unit { font-size: 1rem; color: var(--accent); margin-left: 2px; }
+/* ── Engineering table ── */
+.eng-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:2.5rem}
+.eng-table th{text-align:left;padding:10px 12px;background:var(--bg3);color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.eng-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--muted2);vertical-align:top}
+.eng-table td:first-child{color:var(--text);font-family:var(--mono);font-size:12px;white-space:nowrap}
+.eng-table tr:last-child td{border-bottom:none}
 
-  /* ── Projects ── */
-  .projects-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 1.25rem;
-  }
-  .project-card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 1.5rem;
-    display: flex; flex-direction: column; gap: 1rem;
-    transition: border-color .2s, transform .2s;
-    text-decoration: none; color: inherit;
-  }
-  .project-card:hover {
-    border-color: var(--border2); transform: translateY(-2px);
-  }
-  .project-header { display: flex; align-items: flex-start; justify-content: space-between; }
-  .project-icon {
-    width: 40px; height: 40px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-  }
-  .project-status {
-    font-family: var(--mono); font-size: 10px; font-weight: 500;
-    padding: 3px 8px; border-radius: 20px; border: 1px solid;
-  }
-  .status-active { color: var(--accent3); border-color: rgba(52,211,153,.3); background: rgba(52,211,153,.08); }
-  .status-wip    { color: var(--warn);    border-color: rgba(251,146,60,.3);  background: rgba(251,146,60,.08); }
-  .status-stable { color: var(--accent);  border-color: rgba(56,189,248,.3);  background: rgba(56,189,248,.08); }
+/* ── Projects grid ── */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:1.25rem}
+.proj-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}
+.proj-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.proj-header{display:flex;align-items:flex-start;justify-content:space-between}
+.proj-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.proj-status{font-family:var(--mono);font-size:10px;font-weight:500;padding:3px 8px;border-radius:20px;border:1px solid}
+.s-active{color:var(--accent3);border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.08)}
+.s-wip{color:var(--warn);border-color:rgba(251,146,60,.3);background:rgba(251,146,60,.08)}
+.s-stable{color:var(--accent);border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.08)}
+.proj-name{font-size:1rem;font-weight:600;letter-spacing:-.01em}
+.proj-desc{font-size:13px;color:var(--muted);line-height:1.7}
+.proj-stack{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto}
+.pill{font-family:var(--mono);font-size:10px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 7px;border-radius:3px}
+.proj-links{display:flex;gap:.5rem;padding-top:.75rem;border-top:1px solid var(--border)}
+.proj-link{font-size:12px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:.3rem}
+.proj-link:hover{color:#7dd3fc}
 
-  .project-name { font-size: 1rem; font-weight: 600; letter-spacing: -.01em; }
-  .project-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
-  .project-stack { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; }
-  .stack-pill {
-    font-family: var(--mono); font-size: 10px; color: var(--muted);
-    background: var(--bg3); border: 1px solid var(--border);
-    padding: 2px 7px; border-radius: 3px;
-  }
-  .project-links {
-    display: flex; gap: .5rem; padding-top: .75rem;
-    border-top: 1px solid var(--border);
-  }
-  .proj-link {
-    font-size: 12px; color: var(--accent); text-decoration: none;
-    display: flex; align-items: center; gap: .3rem;
-    transition: color .15s;
-  }
-  .proj-link:hover { color: #7dd3fc; }
-  .proj-link svg { width: 12px; height: 12px; }
+/* ── Skills ── */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem}
+.skill-group{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
+.sg-title{font-family:var(--mono);font-size:11px;color:var(--accent2);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.75rem}
+.skill-list{display:flex;flex-wrap:wrap;gap:.4rem}
+.sk{font-size:12px;color:var(--text);background:var(--bg3);border:1px solid var(--border);padding:3px 9px;border-radius:4px}
 
-  /* ── Skills ── */
-  .skills-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.25rem;
-  }
-  .skill-group {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 10px; padding: 1.25rem;
-  }
-  .skill-group-title {
-    font-family: var(--mono); font-size: 11px; color: var(--accent2);
-    letter-spacing: .07em; text-transform: uppercase; margin-bottom: .75rem;
-  }
-  .skill-list { display: flex; flex-wrap: wrap; gap: .4rem; }
-  .skill-item {
-    font-size: 12px; color: var(--text);
-    background: var(--bg3); border: 1px solid var(--border);
-    padding: 3px 9px; border-radius: 4px;
-  }
+/* ── Terminal ── */
+.terminal{background:#0d1117;border:1px solid var(--border2);border-radius:10px;overflow:hidden;margin:2.5rem 0}
+.t-bar{background:#161b22;padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid var(--border)}
+.t-dot{width:10px;height:10px;border-radius:50%}
+.t-body{padding:1.25rem 1.5rem;font-family:var(--mono);font-size:12.5px;line-height:2}
+.tp{color:#a6e3a1}.tc{color:#cdd6f4}.to{color:#6c7086}.tg{color:#a6e3a1}.ta{color:#89b4fa}.tw{color:#fab387}
 
-  /* ── Terminal widget ── */
-  .terminal {
-    background: #0d1117; border: 1px solid var(--border2);
-    border-radius: 10px; overflow: hidden;
-    margin: 3rem 0;
-  }
-  .terminal-bar {
-    background: #161b22; padding: .6rem 1rem;
-    display: flex; align-items: center; gap: .5rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
-  .terminal-body { padding: 1.25rem 1.5rem; font-family: var(--mono); font-size: 12.5px; line-height: 2; }
-  .t-prompt { color: var(--accent3); }
-  .t-cmd    { color: var(--text); }
-  .t-out    { color: var(--muted); }
-  .t-ok     { color: var(--accent3); }
-  .t-hl     { color: var(--accent); }
+/* ── Contact ── */
+.contact-grid{display:flex;flex-wrap:wrap;gap:1rem}
+.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;text-decoration:none;color:var(--text);flex:1 1 200px;min-width:0;transition:border-color .2s}
+.contact-card:hover{border-color:var(--border2)}
+.cc-lbl{font-size:11px;color:var(--muted);margin-bottom:2px}
+.cc-val{font-size:13px;font-weight:500}
 
-  /* ── Contact ── */
-  .contact-grid { display: flex; flex-wrap: wrap; gap: 1rem; }
-  .contact-card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 10px; padding: 1.25rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
-    text-decoration: none; color: var(--text);
-    flex: 1 1 200px; min-width: 0; transition: border-color .2s;
-  }
-  .contact-card:hover { border-color: var(--border2); }
-  .contact-icon { font-size: 20px; flex-shrink: 0; }
-  .contact-label { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
-  .contact-value { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:12px;color:var(--muted)}
+footer span{color:var(--accent)}
 
-  /* ── Footer ── */
-  footer {
-    border-top: 1px solid var(--border); padding: 2rem;
-    text-align: center; font-size: 12px; color: var(--muted);
-  }
-  footer span { color: var(--accent); }
+.fade-in{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.fade-in.visible{opacity:1;transform:none}
 
-  /* ── Divider ── */
-  .divider { border: none; border-top: 1px solid var(--border); }
-
-  /* ── Scroll fade-in ── */
-  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
-  .fade-in.visible { opacity: 1; transform: none; }
-
-  @media (max-width: 600px) {
-    .projects-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    h1 { font-size: 2rem; }
-  }
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@media(max-width:640px){.proj-grid,.integrations{grid-template-columns:1fr}.nav-links{display:none}h1{font-size:2rem}}
 </style>
 </head>
 <body>
@@ -268,6 +143,7 @@
 <nav>
   <div class="nav-logo">rajasekar8<span style="color:var(--muted)">@github</span></div>
   <div class="nav-links">
+    <a href="#opsbot">Ops Bot</a>
     <a href="#projects">Projects</a>
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
@@ -275,363 +151,295 @@
   </div>
 </nav>
 
-<!-- ── Hero ── -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">Principal Infrastructure &amp; AIOps Architect</div>
-    <h1>
-      Rajasekar M<br>
-      <span class="dim">Building intelligent </span><span class="hl">ops tooling</span><br>
-      <span class="dim">for enterprise infra.</span>
-    </h1>
-    <p class="hero-desc">
-      Cognizant · Takeda Pharmaceutical — designing automation, AIOps platforms,
-      and observability solutions across SolarWinds, Cisco DNAC, AppDynamics,
-      ThousandEyes, Splunk, and ServiceNow.
-    </p>
+    <div class="eyebrow">Principal Infrastructure &amp; AIOps Architect</div>
+    <h1>Rajasekar M<br><span class="dim">Building intelligent </span><span class="hl">ops platforms</span><br><span class="dim">from scratch.</span></h1>
+    <p class="hero-desc">12+ years designing enterprise automation, AIOps platforms, and observability solutions. I don't just configure tools — I build them. 25,000+ lines of production ops tooling across four monitoring platforms.</p>
     <div class="hero-tags">
-      <span class="tag tag-blue">SolarWinds HCO</span>
-      <span class="tag tag-blue">Cisco DNAC</span>
-      <span class="tag tag-purple">AppDynamics</span>
-      <span class="tag tag-purple">ThousandEyes</span>
-      <span class="tag tag-green">PowerShell</span>
-      <span class="tag tag-green">Python / FastAPI</span>
-      <span class="tag tag-orange">AIOps</span>
-      <span class="tag tag-orange">AI Agents / MCP</span>
+      <span class="tag t-blue">SolarWinds HCO</span>
+      <span class="tag t-blue">Cisco DNAC</span>
+      <span class="tag t-purple">AppDynamics</span>
+      <span class="tag t-purple">ThousandEyes</span>
+      <span class="tag t-green">PowerShell</span>
+      <span class="tag t-green">Python · FastAPI</span>
+      <span class="tag t-orange">AIOps</span>
+      <span class="tag t-orange">Alert Correlation</span>
+      <span class="tag t-pink">AI Agents · MCP</span>
     </div>
     <div class="hero-btns">
-      <a href="#projects" class="btn btn-primary">View Projects</a>
-      <a href="https://github.com/rajasekar8" target="_blank" class="btn btn-secondary">GitHub Profile ↗</a>
+      <a href="#opsbot" class="btn btn-primary">See the Ops Bot ↓</a>
+      <a href="https://github.com/rajasekar8" target="_blank" class="btn btn-ghost">GitHub ↗</a>
     </div>
   </div>
 </section>
 
-<!-- ── Stats ── -->
-<section id="about" style="padding-top:0">
-  <div class="section-inner fade-in">
+<!-- STATS -->
+<section style="padding-top:0">
+  <div class="inner fade-in">
     <div class="stats-row">
-      <div class="stat">
-        <div class="stat-num">12<span class="unit">k+</span></div>
-        <div class="stat-lbl">Lines of ops automation code</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">4</div>
-        <div class="stat-lbl">Monitoring platforms integrated</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">5<span class="unit">+</span></div>
-        <div class="stat-lbl">Active tools in production</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">10<span class="unit">+</span></div>
-        <div class="stat-lbl">Years in infrastructure</div>
-      </div>
+      <div class="stat"><div class="stat-num">25<span class="u">k+</span></div><div class="stat-lbl">Lines of production code</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-lbl">Monitoring platforms integrated</div></div>
+      <div class="stat"><div class="stat-num">40<span class="u">+</span></div><div class="stat-lbl">Functional panels built</div></div>
+      <div class="stat"><div class="stat-num">12<span class="u">+</span></div><div class="stat-lbl">Years in infrastructure</div></div>
     </div>
 
     <div class="terminal">
-      <div class="terminal-bar">
+      <div class="t-bar">
         <div class="t-dot" style="background:#ff5f56"></div>
         <div class="t-dot" style="background:#ffbd2e"></div>
         <div class="t-dot" style="background:#27c93f"></div>
-        <span style="font-size:11px;color:var(--muted);margin-left:.5rem;font-family:var(--mono)">rajasekar8 — Git Bash</span>
+        <span style="font-size:11px;color:var(--muted);margin-left:.5rem;font-family:var(--mono)">git log — rajasekar8/Ops_Bot</span>
       </div>
-      <div class="terminal-body">
-        <div><span class="t-prompt">rajasekar8@github</span><span class="t-cmd"> ~ $ git log --oneline --all</span></div>
-        <div class="t-out">3d116b2 <span class="t-hl">Ops_Bot</span>     — SolarWinds WinForms bot (SW · DNAC · AppD · TE)</div>
-        <div class="t-out">a12f4c1 <span class="t-hl">IT_Tools_Lab</span> — Free + premium SWQL/PowerShell script catalog</div>
-        <div class="t-out">9e3c7d0 <span class="t-hl">Riyaan</span>      — Personal AI assistant (FastAPI + Flutter)</div>
-        <div class="t-out">7b2a1f8 <span class="t-hl">Man_Bot</span>     — Automated anime/manga Instagram Reels pipeline</div>
-        <div class="t-out">5d9e2c3 <span class="t-hl">SW_Automation</span> — SolarWinds custom pollers + alert engineering</div>
-        <div><span class="t-prompt">rajasekar8@github</span><span class="t-cmd"> ~ $ </span><span style="display:inline-block;width:7px;height:13px;background:var(--accent);animation:blink 1s step-end infinite;vertical-align:middle"></span></div>
+      <div class="t-body">
+        <div><span class="tp">$</span> <span class="tc">git log --oneline</span></div>
+        <div class="to">f3a92c1 <span class="ta">feat:</span> Alert Correlation Engine — site-event detection across SW alerts</div>
+        <div class="to">e21b7d4 <span class="ta">feat:</span> Unified Alert Dashboard — SW + AppD + ThousandEyes in one view</div>
+        <div class="to">d10a3f8 <span class="ta">feat:</span> Maintenance Window Scheduler — CSV-driven auto mute/unmute</div>
+        <div class="to">c9e2b51 <span class="ta">feat:</span> AppD Agent Upgrade Planner — scans estate, generates task list</div>
+        <div class="to">b87c140 <span class="ta">feat:</span> NCM config diff + side-by-side compare panel</div>
+        <div class="to">a762f3d <span class="ta">feat:</span> SW vs DNAC + CMDB vs DNAC reconciliation with CSV export</div>
+        <div class="to">9541e2c <span class="ta">feat:</span> Interface traffic charts — real-time bandwidth via DataVisualization</div>
+        <div class="to">8430b19 <span class="ta">feat:</span> SSH Quick Terminal — embedded launcher from any inventory panel</div>
+        <div class="to">...</div>
+        <div><span class="tp">$</span> <span class="tc">wc -l Ops_bot.ps1</span></div>
+        <div class="tg">25000+ Ops_bot.ps1</div>
+        <div><span class="tp">$</span> <span class="tc">█</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Projects ── -->
+<!-- OPS BOT DEEP DIVE -->
+<section id="opsbot">
+  <div class="inner fade-in">
+    <div class="sec-label">// flagship project</div>
+    <h2>Ops Bot — Enterprise Ops Platform</h2>
+
+    <div class="feature-highlight">
+      <div class="fh-title">What this is — and why it matters</div>
+      <div class="fh-desc">A 25,000+ line PowerShell WinForms application that unifies SolarWinds, Cisco DNAC/Catalyst Center, AppDynamics, and ThousandEyes into a single intelligent operations console. Compiled to a zero-install <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:11px">.exe</code> via PS2EXE — no deployment, no dependencies, runs on any Windows machine. Most ops teams switch between four separate browser tabs to see what this shows on one screen.</div>
+    </div>
+
+    <div class="integrations">
+
+      <div class="int-card">
+        <div class="int-header">
+          <div class="int-icon" style="background:rgba(56,189,248,.1)">📡</div>
+          <div><div class="int-name">SolarWinds Orion</div><div class="int-sub">SWIS REST API · SWQL · NCM</div></div>
+        </div>
+        <div class="int-body">
+          <ul class="feat-list">
+            <li>Full CMDB node lifecycle — add, retire, remove, manage/unmanage with bulk operations</li>
+            <li>Alert muting with configurable duration and reason tracking</li>
+            <li>Network Configuration Manager — download configs, visual diff, side-by-side compare of any two snapshots</li>
+            <li>Interface traffic charts — real-time bandwidth graphs using Windows DataVisualization</li>
+            <li>SolarWinds Health Check — node health scoring across the full estate</li>
+            <li>Custom SWQL with parameterised inputs; all calls via POST to handle complex NCM joins</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-header">
+          <div class="int-icon" style="background:rgba(52,211,153,.1)">🌐</div>
+          <div><div class="int-name">Cisco DNAC / Catalyst Center</div><div class="int-sub">REST API · Token auth · Paginated</div></div>
+        </div>
+        <div class="int-body">
+          <ul class="feat-list">
+            <li>Paginated device inventory with token-based auth and auto-refresh</li>
+            <li>Access Point inventory with signal and association data</li>
+            <li>SolarWinds vs DNAC reconciliation — finds devices in SW not in DNAC and vice versa</li>
+            <li>CMDB vs DNAC three-way comparison: SW only / DNAC only / in both</li>
+            <li>DNAC vs SW AP reconciliation — wireless estate alignment</li>
+            <li>All results exported to timestamped CSV for audit trail</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-header">
+          <div class="int-icon" style="background:rgba(251,146,60,.1)">⚡</div>
+          <div><div class="int-name">AppDynamics SaaS</div><div class="int-sub">REST API · OAuth2 · APM estate</div></div>
+        </div>
+        <div class="int-body">
+          <ul class="feat-list">
+            <li>Application and tier listing across full APM estate</li>
+            <li>Performance metrics — response time, error rate, calls/min with configurable windows</li>
+            <li>Agent version audit — scans every App Agent and Machine Agent across all applications</li>
+            <li>Agent Upgrade Planner — auto-generates ready-to-action upgrade task list filtered by agent type</li>
+            <li>Token-based session management with login dialog and persistence</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-header">
+          <div class="int-icon" style="background:rgba(129,140,248,.1)">👁</div>
+          <div><div class="int-name">ThousandEyes</div><div class="int-sub">v7 API · Agent inventory</div></div>
+        </div>
+        <div class="int-body">
+          <ul class="feat-list">
+            <li>Agent and test inventory across the TE estate</li>
+            <li>API key-based authentication with session persistence</li>
+            <li>Feeds into the Unified Alert Dashboard alongside SW and AppD</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1.25rem;color:var(--muted2)">Advanced capabilities</h3>
+    <div class="adv-grid">
+
+      <div class="adv-card">
+        <div class="adv-icon">🔗</div>
+        <div class="adv-title">Alert Correlation Engine</div>
+        <div class="adv-desc">Groups active SW alerts by site code and time window. Automatically distinguishes site-wide events (multiple devices same location, same time) from individual node faults. Configurable threshold. Replicates what enterprise AIOps platforms charge separately for.</div>
+        <span class="adv-badge" style="color:var(--pink);border-color:rgba(244,114,182,.3);background:rgba(244,114,182,.06)">AIOps logic</span>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-icon">📊</div>
+        <div class="adv-title">Unified Alert Dashboard</div>
+        <div class="adv-desc">Aggregates live alerts from SolarWinds, AppDynamics, and ThousandEyes into a single view with shared time window selector (15 min → 48 hrs). Eliminates tool-switching during incidents.</div>
+        <span class="adv-badge" style="color:var(--accent);border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.06)">Cross-platform</span>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-icon">🕐</div>
+        <div class="adv-title">Maintenance Window Scheduler</div>
+        <div class="adv-desc">Accepts CSV input or manual entry. Bot monitors the schedule and automatically mutes nodes at start time and unmutes at end — fully unattended maintenance window management without touching SolarWinds directly.</div>
+        <span class="adv-badge" style="color:var(--accent3);border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.06)">Automation</span>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-icon">📋</div>
+        <div class="adv-title">Agent Upgrade Planner</div>
+        <div class="adv-desc">Scans all AppDynamics APM applications across the estate, identifies App Agents and Machine Agents older than a target version, and outputs a ready-to-action upgrade task list — no manual spreadsheet needed.</div>
+        <span class="adv-badge" style="color:var(--warn);border-color:rgba(251,146,60,.3);background:rgba(251,146,60,.06)">Automation</span>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-icon">📧</div>
+        <div class="adv-title">Email Notification Engine</div>
+        <div class="adv-desc">Built-in SMTP with TLS support. Compose and send alert summaries or node reports directly from any panel. Programmatic mail dispatch for alerts and node events via dedicated invoke functions.</div>
+        <span class="adv-badge" style="color:var(--accent2);border-color:rgba(129,140,248,.3);background:rgba(129,140,248,.06)">Ops workflow</span>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-icon">💻</div>
+        <div class="adv-title">SSH Quick Terminal</div>
+        <div class="adv-desc">Embedded SSH session launcher — connect to any node directly from inventory without switching tools. Reduces context switching during troubleshooting.</div>
+        <span class="adv-badge" style="color:var(--accent3);border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.06)">Ops workflow</span>
+      </div>
+
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1.25rem;color:var(--muted2)">Engineering decisions worth noting</h3>
+    <table class="eng-table">
+      <tr><th>Decision</th><th>Why</th></tr>
+      <tr><td>WinForms + PS2EXE</td><td>Single .exe, zero install, runs on any Windows machine — no runtime, no dependencies, no deployment</td></tr>
+      <tr><td>DPI via P/Invoke</td><td>Prevents text clipping at 125%/150% scaling without breaking PS2EXE compilation</td></tr>
+      <tr><td>All API calls via POST</td><td>Avoids 400 errors on complex SWQL with NCM joins that break GET requests at length</td></tr>
+      <tr><td>EST → UTC normalisation</td><td>All time inputs converted from EST to UTC before API calls — handles IST/GMT client machines transparently</td></tr>
+      <tr><td>Shared font objects at startup</td><td>Prevents repeated GDI object allocation across 40+ panels — measurable memory impact at scale</td></tr>
+      <tr><td>TableLayoutPanel layout engine</td><td>Deterministic pixel layout prevents control drift across different screen sizes and DPI settings</td></tr>
+    </table>
+
+  </div>
+</section>
+
+<!-- OTHER PROJECTS -->
 <section id="projects">
-  <div class="section-inner fade-in">
-    <div class="section-label">// projects</div>
-    <h2>What I've built</h2>
+  <div class="inner fade-in">
+    <div class="sec-label">// other projects</div>
+    <h2>More work</h2>
+    <div class="proj-grid">
 
-    <div class="projects-grid">
-
-      <!-- Ops Bot -->
-      <a class="project-card" href="https://github.com/rajasekar8/Ops_Bot" target="_blank">
-        <div class="project-header">
-          <div class="project-icon" style="background:rgba(56,189,248,.1)">⚙️</div>
-          <span class="project-status status-active">Active</span>
+      <a class="proj-card" href="https://github.com/rajasekar8/IT_Tools_Lab" target="_blank">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(129,140,248,.1)">🔧</div>
+          <span class="proj-status s-active">Active</span>
         </div>
-        <div>
-          <div class="project-name">Ops Bot</div>
-          <div class="project-desc">
-            Full-featured WinForms operations assistant with 12,000+ lines of PowerShell.
-            Integrates SolarWinds SWIS API, Cisco DNAC, AppDynamics SaaS, and ThousandEyes v7.
-            Single-pane-of-glass for Takeda infrastructure operations.
-          </div>
-        </div>
-        <div class="project-stack">
-          <span class="stack-pill">PowerShell</span>
-          <span class="stack-pill">WinForms</span>
-          <span class="stack-pill">SolarWinds SWIS</span>
-          <span class="stack-pill">DNAC REST</span>
-          <span class="stack-pill">AppDynamics</span>
-          <span class="stack-pill">ThousandEyes</span>
-          <span class="stack-pill">PS2EXE</span>
-        </div>
-        <div class="project-links">
-          <span class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View on GitHub
-          </span>
-        </div>
+        <div class="proj-name">IT Tools Lab</div>
+        <div class="proj-desc">Curated catalog of free and premium PowerShell and SWQL automation scripts. Covers SolarWinds node management, NCM config operations, alert engineering, and infrastructure reporting. Published via Gumroad.</div>
+        <div class="proj-stack"><span class="pill">PowerShell</span><span class="pill">SWQL</span><span class="pill">SolarWinds API</span><span class="pill">Gumroad</span></div>
+        <div class="proj-links"><span class="proj-link">View on GitHub ↗</span></div>
       </a>
 
-      <!-- IT Tools Lab -->
-      <a class="project-card" href="https://github.com/rajasekar8/IT_Tools_Lab" target="_blank">
-        <div class="project-header">
-          <div class="project-icon" style="background:rgba(129,140,248,.1)">🔧</div>
-          <span class="project-status status-active">Active</span>
+      <a class="proj-card" href="https://github.com/rajasekar8/riyaan-core" target="_blank">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(52,211,153,.1)">🤖</div>
+          <span class="proj-status s-wip">In Progress</span>
         </div>
-        <div>
-          <div class="project-name">IT Tools Lab</div>
-          <div class="project-desc">
-            Curated catalog of free and premium PowerShell and SWQL automation scripts.
-            Covers SolarWinds node management, NCM config backup, alert engineering,
-            and infrastructure reporting.
-          </div>
-        </div>
-        <div class="project-stack">
-          <span class="stack-pill">PowerShell</span>
-          <span class="stack-pill">SWQL</span>
-          <span class="stack-pill">SolarWinds API</span>
-          <span class="stack-pill">Gumroad</span>
-        </div>
-        <div class="project-links">
-          <span class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View on GitHub
-          </span>
-        </div>
+        <div class="proj-name">Riyaan — Personal AI Assistant</div>
+        <div class="proj-desc">AI assistant with a FastAPI backend on Oracle Cloud Infrastructure and Flutter frontend for cross-platform mobile and desktop. Designed as a personal knowledge and task automation companion with LLM integration.</div>
+        <div class="proj-stack"><span class="pill">Python</span><span class="pill">FastAPI</span><span class="pill">Flutter</span><span class="pill">Oracle Cloud</span><span class="pill">LLM API</span></div>
+        <div class="proj-links"><span class="proj-link">View on GitHub ↗</span></div>
       </a>
 
-      <!-- Riyaan -->
-      <a class="project-card" href="https://github.com/rajasekar8/riyaan-core" target="_blank">
-        <div class="project-header">
-          <div class="project-icon" style="background:rgba(52,211,153,.1)">🤖</div>
-          <span class="project-status status-wip">In Progress</span>
+      <a class="proj-card" href="https://github.com/rajasekar8/Man_Bot" target="_blank">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(251,146,60,.1)">🎬</div>
+          <span class="proj-status s-active">Active</span>
         </div>
-        <div>
-          <div class="project-name">Riyaan — Personal AI Assistant</div>
-          <div class="project-desc">
-            AI assistant system with a FastAPI backend hosted on Oracle Cloud Infrastructure.
-            Flutter frontend for cross-platform mobile and desktop. Designed as a personal
-            knowledge and automation companion.
-          </div>
-        </div>
-        <div class="project-stack">
-          <span class="stack-pill">Python</span>
-          <span class="stack-pill">FastAPI</span>
-          <span class="stack-pill">Flutter</span>
-          <span class="stack-pill">Oracle Cloud</span>
-          <span class="stack-pill">LLM API</span>
-        </div>
-        <div class="project-links">
-          <span class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View on GitHub
-          </span>
-        </div>
+        <div class="proj-name">Man Bot — Automated Content Pipeline</div>
+        <div class="proj-desc">Fully automated pipeline for producing short-form video content. Handles sourcing, editing, captioning, and publishing to Instagram Reels and YouTube Shorts — zero manual intervention per post.</div>
+        <div class="proj-stack"><span class="pill">Python</span><span class="pill">Video automation</span><span class="pill">Instagram API</span><span class="pill">YouTube API</span></div>
+        <div class="proj-links"><span class="proj-link">View on GitHub ↗</span></div>
       </a>
 
-      <!-- Man Bot -->
-      <a class="project-card" href="https://github.com/rajasekar8/Man_Bot" target="_blank">
-        <div class="project-header">
-          <div class="project-icon" style="background:rgba(251,146,60,.1)">🎬</div>
-          <span class="project-status status-active">Active</span>
+      <a class="proj-card" href="https://github.com/rajasekar8/NetBox_SW_Reconcile" target="_blank">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(56,189,248,.1)">🔄</div>
+          <span class="proj-status s-stable">Stable</span>
         </div>
-        <div>
-          <div class="project-name">Man Bot — Content Pipeline</div>
-          <div class="project-desc">
-            Automated pipeline for generating anime and manga video content.
-            Produces Instagram Reels and YouTube Shorts with automated editing,
-            captioning, and scheduling without manual intervention.
-          </div>
-        </div>
-        <div class="project-stack">
-          <span class="stack-pill">Python</span>
-          <span class="stack-pill">Video automation</span>
-          <span class="stack-pill">Instagram API</span>
-          <span class="stack-pill">YouTube API</span>
-        </div>
-        <div class="project-links">
-          <span class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View on GitHub
-          </span>
-        </div>
-      </a>
-
-      <!-- SW Automation -->
-      <a class="project-card" href="https://github.com/rajasekar8/SolarWinds_Automation" target="_blank">
-        <div class="project-header">
-          <div class="project-icon" style="background:rgba(56,189,248,.1)">📡</div>
-          <span class="project-status status-stable">Stable</span>
-        </div>
-        <div>
-          <div class="project-name">SolarWinds Automation</div>
-          <div class="project-desc">
-            Advanced SWQL queries, custom pollers, alert engineering templates,
-            and SWIS API automation for SolarWinds Orion HCO. Built for
-            enterprise-scale Takeda infrastructure monitoring.
-          </div>
-        </div>
-        <div class="project-stack">
-          <span class="stack-pill">SWQL</span>
-          <span class="stack-pill">SWIS API</span>
-          <span class="stack-pill">PowerShell</span>
-          <span class="stack-pill">SolarWinds Orion</span>
-          <span class="stack-pill">NCM</span>
-        </div>
-        <div class="project-links">
-          <span class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View on GitHub
-          </span>
-        </div>
-      </a>
-
-      <!-- NetBox Reconciliation -->
-      <a class="project-card" href="https://github.com/rajasekar8/NetBox_SW_Reconcile" target="_blank">
-        <div class="project-header">
-          <div class="project-icon" style="background:rgba(129,140,248,.1)">🔄</div>
-          <span class="project-status status-stable">Stable</span>
-        </div>
-        <div>
-          <div class="project-name">NetBox ↔ SolarWinds Reconciler</div>
-          <div class="project-desc">
-            Standalone PowerShell script that compares NetBox CMDB device inventory
-            against SolarWinds monitored nodes, surfaces discrepancies, and produces
-            a reconciliation report for Takeda's infrastructure team.
-          </div>
-        </div>
-        <div class="project-stack">
-          <span class="stack-pill">PowerShell</span>
-          <span class="stack-pill">NetBox API</span>
-          <span class="stack-pill">SolarWinds SWIS</span>
-          <span class="stack-pill">CMDB</span>
-        </div>
-        <div class="project-links">
-          <span class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View on GitHub
-          </span>
-        </div>
+        <div class="proj-name">NetBox ↔ SolarWinds Reconciler</div>
+        <div class="proj-desc">Standalone PowerShell tool that compares NetBox CMDB inventory against SolarWinds monitored nodes, surfaces discrepancies, and produces a structured reconciliation report. Eliminates manual CMDB audit work.</div>
+        <div class="proj-stack"><span class="pill">PowerShell</span><span class="pill">NetBox API</span><span class="pill">SolarWinds SWIS</span><span class="pill">CMDB</span></div>
+        <div class="proj-links"><span class="proj-link">View on GitHub ↗</span></div>
       </a>
 
     </div>
   </div>
 </section>
 
-<!-- ── Skills ── -->
+<!-- SKILLS -->
 <section id="skills">
-  <div class="section-inner fade-in">
-    <div class="section-label">// skills</div>
+  <div class="inner fade-in">
+    <div class="sec-label">// skills</div>
     <h2>Technology stack</h2>
     <div class="skills-grid">
-      <div class="skill-group">
-        <div class="skill-group-title">Observability</div>
-        <div class="skill-list">
-          <span class="skill-item">SolarWinds Orion HCO</span>
-          <span class="skill-item">AppDynamics</span>
-          <span class="skill-item">ThousandEyes</span>
-          <span class="skill-item">Splunk</span>
-          <span class="skill-item">SWQL / SWIS</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Network</div>
-        <div class="skill-list">
-          <span class="skill-item">Cisco DNAC</span>
-          <span class="skill-item">Network automation</span>
-          <span class="skill-item">NCM</span>
-          <span class="skill-item">NetBox CMDB</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Automation</div>
-        <div class="skill-list">
-          <span class="skill-item">PowerShell</span>
-          <span class="skill-item">Python</span>
-          <span class="skill-item">REST APIs</span>
-          <span class="skill-item">PS2EXE</span>
-          <span class="skill-item">WinForms GUI</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">AI / Cloud</div>
-        <div class="skill-list">
-          <span class="skill-item">FastAPI</span>
-          <span class="skill-item">LLM APIs</span>
-          <span class="skill-item">MCP Protocol</span>
-          <span class="skill-item">Oracle Cloud</span>
-          <span class="skill-item">Flutter</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">ITSM / DevOps</div>
-        <div class="skill-list">
-          <span class="skill-item">ServiceNow</span>
-          <span class="skill-item">Git / GitHub</span>
-          <span class="skill-item">Azure Boards</span>
-          <span class="skill-item">Docker basics</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Employer</div>
-        <div class="skill-list">
-          <span class="skill-item">Cognizant CTS</span>
-          <span class="skill-item">Takeda Pharma</span>
-          <span class="skill-item">MTO Platform</span>
-        </div>
-      </div>
+      <div class="skill-group"><div class="sg-title">Observability</div><div class="skill-list"><span class="sk">SolarWinds HCO</span><span class="sk">AppDynamics</span><span class="sk">ThousandEyes</span><span class="sk">Splunk</span><span class="sk">SWQL / SWIS</span></div></div>
+      <div class="skill-group"><div class="sg-title">Network</div><div class="skill-list"><span class="sk">Cisco DNAC</span><span class="sk">Catalyst Center</span><span class="sk">NCM</span><span class="sk">NetBox CMDB</span><span class="sk">Network automation</span></div></div>
+      <div class="skill-group"><div class="sg-title">Automation</div><div class="skill-list"><span class="sk">PowerShell</span><span class="sk">Python</span><span class="sk">REST APIs</span><span class="sk">WinForms GUI</span><span class="sk">PS2EXE</span></div></div>
+      <div class="skill-group"><div class="sg-title">AI / Platform</div><div class="skill-list"><span class="sk">FastAPI</span><span class="sk">LLM APIs</span><span class="sk">AI Agents</span><span class="sk">MCP Protocol</span><span class="sk">Oracle Cloud</span><span class="sk">Flutter</span></div></div>
+      <div class="skill-group"><div class="sg-title">AIOps</div><div class="skill-list"><span class="sk">Alert correlation</span><span class="sk">Event grouping</span><span class="sk">Unified alerting</span><span class="sk">Maintenance automation</span></div></div>
+      <div class="skill-group"><div class="sg-title">ITSM / DevOps</div><div class="skill-list"><span class="sk">ServiceNow</span><span class="sk">Git / GitHub</span><span class="sk">Azure Boards</span><span class="sk">Docker basics</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- ── Contact ── -->
+<!-- CONTACT -->
 <section id="contact">
-  <div class="section-inner fade-in">
-    <div class="section-label">// contact</div>
-    <h2>Get in touch</h2>
+  <div class="inner fade-in">
+    <div class="sec-label">// contact</div>
+    <h2>Open to opportunities</h2>
+    <p style="color:var(--muted2);font-size:14px;margin-bottom:1.5rem;max-width:520px">Interested in Infrastructure Architecture, AIOps, Platform Engineering, and AI-driven operations roles. Available for discussion.</p>
     <div class="contact-grid">
       <a class="contact-card" href="https://github.com/rajasekar8" target="_blank">
-        <div class="contact-icon">💻</div>
-        <div>
-          <div class="contact-label">GitHub</div>
-          <div class="contact-value">github.com/rajasekar8</div>
-        </div>
-      </a>
-      <a class="contact-card" href="mailto:rajasekar.murugan@cognizant.com">
-        <div class="contact-icon">✉️</div>
-        <div>
-          <div class="contact-label">Work email</div>
-          <div class="contact-value">rajasekar.murugan@cognizant.com</div>
-        </div>
+        <span style="font-size:20px">💻</span>
+        <div><div class="cc-lbl">GitHub</div><div class="cc-val">github.com/rajasekar8</div></div>
       </a>
       <a class="contact-card" href="https://www.linkedin.com/in/rajasekar-m" target="_blank">
-        <div class="contact-icon">🔗</div>
-        <div>
-          <div class="contact-label">LinkedIn</div>
-          <div class="contact-value">linkedin.com/in/rajasekar-m</div>
-        </div>
+        <span style="font-size:20px">🔗</span>
+        <div><div class="cc-lbl">LinkedIn</div><div class="cc-val">linkedin.com/in/rajasekar-m</div></div>
       </a>
       <div class="contact-card">
-        <div class="contact-icon">📍</div>
-        <div>
-          <div class="contact-label">Location</div>
-          <div class="contact-value">Bengaluru, India</div>
-        </div>
+        <span style="font-size:20px">📍</span>
+        <div><div class="cc-lbl">Location</div><div class="cc-val">Bengaluru, India</div></div>
       </div>
     </div>
   </div>
@@ -641,14 +449,9 @@
   <p>Built with GitHub Pages · <span>rajasekar8</span> · Bengaluru, India</p>
 </footer>
 
-<style>
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-</style>
 <script>
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.08});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
