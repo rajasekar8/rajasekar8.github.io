@@ -324,6 +324,22 @@ footer span{color:var(--accent)}
         </div>
       </div>
 
+      <div class="int-card">
+        <div class="int-header">
+          <div class="int-icon" style="background:rgba(251,146,60,.1)">🩹</div>
+          <div><div class="int-name">Remediation Guidance Engine</div><div class="int-sub">Runbook-grounded · suggestion-only by design</div></div>
+        </div>
+        <div class="int-body">
+          <ul class="feat-list">
+            <li>Detects fix/remediate intent (and separately, attempts to slip in raw device commands) and routes both into a guided-response path — the bot is shared across many operators with no central approver, so it deliberately never executes; a human always runs the actual command</li>
+            <li>Structured six-part output: <strong style="color:var(--text)">likely fix → pre-checks → exact steps (with expected result per step) → verification → rollback → escalation criteria</strong> — the same shape as a real incident runbook, not a paragraph of prose</li>
+            <li>If a matching runbook exists in the Knowledge store it's treated as authoritative and followed exactly; if none matches, the response says so explicitly ("no approved runbook — general guidance") rather than presenting a guess as policy</li>
+            <li>Grounded in the live investigation already on screen (node, interface, triggering alert) so guidance matches the actual current fault, not generic advice</li>
+            <li>A full approval-gated execution lifecycle is already designed and scaffolded — playbook catalog with per-playbook risk level, allowed operations, and required parameters; an explicit state machine (<code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:10.5px">APPROVAL_PENDING → APPROVED → ...</code>) — deliberately shipped disabled as a future phase, not left unbuilt</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
 
     <h3 style="font-size:1.1rem;font-weight:600;margin:2.5rem 0 1.25rem;color:var(--muted2)">Platform integrations</h3>
@@ -452,6 +468,15 @@ footer span{color:var(--accent)}
       <tr><td>EST → UTC normalisation</td><td>All time inputs converted from EST to UTC before API calls — handles IST/GMT client machines transparently</td></tr>
       <tr><td>Shared font objects at startup</td><td>Prevents repeated GDI object allocation across 40+ panels — measurable memory impact at scale</td></tr>
       <tr><td>TableLayoutPanel layout engine</td><td>Deterministic pixel layout prevents control drift across different screen sizes and DPI settings</td></tr>
+    </table>
+
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1.25rem;color:var(--muted2)">How this is different</h3>
+    <table class="eng-table">
+      <tr><th>vs.</th><th>The difference</th></tr>
+      <tr><td>Generic "ChatGPT for ops" wrappers</td><td>A raw LLM chat window will confidently hallucinate a remediation step against production infrastructure. This one won't answer a "how do I fix this" question without either an authoritative runbook match or explicitly saying so — confidence-tiered, grounded in live telemetry, never presenting a guess as policy.</td></tr>
+      <tr><td>Commercial AIOps platforms (Moogsoft, BigPanda, ServiceNow ITOM, etc.)</td><td>Those are additional paid platforms you integrate <em>on top of</em> SolarWinds/AppD/DNAC/ThousandEyes. This unifies the four you likely already own into one console, zero-install, zero extra licensing.</td></tr>
+      <tr><td>Tools that market "auto-remediation"</td><td>Most either quietly need a human anyway or carry real blast-radius risk in a shared, multi-operator environment. This one reasoned through that tradeoff explicitly: suggestion-only now, with a full playbook/approval-gated execution lifecycle already designed and scaffolded for when identity and authorization actually exist — not bolted on after an incident.</td></tr>
+      <tr><td>Single-vendor AI assistants</td><td>Locked to one model provider. This runs identically on Claude, GPT, Azure OpenAI, or a fully offline local Ollama model — no vendor lock-in, no per-seat AI licensing required to use it at all.</td></tr>
     </table>
 
   </div>
