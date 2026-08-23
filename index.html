@@ -262,6 +262,72 @@ footer span{color:var(--accent)}
       <div class="fh-desc">A 25,000+ line PowerShell WinForms application that unifies SolarWinds, Cisco DNAC/Catalyst Center, AppDynamics, and ThousandEyes into a single intelligent operations console. Compiled to a zero-install <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:11px">.exe</code> via PS2EXE — no deployment, no dependencies, runs on any Windows machine. Most ops teams switch between four separate browser tabs to see what this shows on one screen.</div>
     </div>
 
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1.25rem;color:var(--muted2)">AI Assistant — multi-agent architecture with RAG</h3>
+    <p style="color:var(--muted2);font-size:13.5px;line-height:1.8;max-width:760px;margin-bottom:1.5rem">The AI layer isn't a chatbot bolted onto the tool — it's a multi-agent
+    system with its own tool-routing, retrieval, and safety architecture,
+    built to work identically across five different LLM providers.</p>
+
+    <div class="integrations">
+
+      <div class="int-card">
+        <div class="int-header">
+          <div class="int-icon" style="background:rgba(244,114,182,.1)">🕸️</div>
+          <div><div class="int-name">Multi-Agent Tool Layer</div><div class="int-sub">MCP-style registry · JSON tool contracts</div></div>
+        </div>
+        <div class="int-body">
+          <ul class="feat-list">
+            <li>A registry of specialized agents (Commander, Orchestrator, Knowledge, Analysis, plus one per monitoring platform) — each declares its own routing keywords, live connection check, and structured JSON response contract, in the spirit of MCP's tool-definition model</li>
+            <li>Built this way specifically because it has to work identically whether the model is Claude, GPT, an Azure deployment, or a fully local Ollama model — none of which share one native function-calling format</li>
+            <li>Cross-platform capabilities compose naturally: e.g. an inventory-reconciliation request routes through Analysis + SolarWinds + DNAC agents together, each contributing its slice of the JSON response</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-header">
+          <div class="int-icon" style="background:rgba(52,211,153,.1)">📚</div>
+          <div><div class="int-name">Knowledge RAG + Grounding</div><div class="int-sub">Confidence-scored retrieval · anti-hallucination checks</div></div>
+        </div>
+        <div class="int-body">
+          <ul class="feat-list">
+            <li>Drop any .txt/.md/.csv/.json/.docx into a Knowledge folder — auto-indexed (re-chunks only files that actually changed), keyword-scored, and injected into the AI's context only when actually relevant to the question asked</li>
+            <li>Retrieval isn't just yes/no — a confidence tier (NONE → LOW → MEDIUM → HIGH → VERY_HIGH) is computed from match strength and how many independent sources corroborate each other, then fed back into the prompt as an explicit instruction on how much to trust it</li>
+            <li><strong style="color:var(--text)">Grounding check:</strong> if retrieval confidence is weak and there's no live telemetry backing a claim, the assistant is explicitly told to say it lacks sufficient evidence rather than guess — live data always outranks retrieved knowledge for anything about current state</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-header">
+          <div class="int-icon" style="background:rgba(56,189,248,.1)">🔀</div>
+          <div><div class="int-name">Provider-Agnostic LLM Routing</div><div class="int-sub">Anthropic · OpenAI · Azure OpenAI · Ollama · Power Automate</div></div>
+        </div>
+        <div class="int-body">
+          <ul class="feat-list">
+            <li>One routing layer decides provider + model per request based on an execution mode — Automatic, EnterpriseAI (cloud providers only), or LocalAI (routes to a local Ollama model, works fully offline with zero API cost)</li>
+            <li>Per-provider request building handled independently (Anthropic's messages format, OpenAI-compatible chat completions, Power Automate's AI Builder text-injection pattern) behind one common interface</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="int-card">
+        <div class="int-header">
+          <div class="int-icon" style="background:rgba(129,140,248,.1)">🛡️</div>
+          <div><div class="int-name">Safety by Architecture, Not Convention</div><div class="int-sub">Capability registry · output guardrails</div></div>
+        </div>
+        <div class="int-body">
+          <ul class="feat-list">
+            <li>Every capability is explicitly registered as <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:10.5px">live</code>, <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:10.5px">planned</code>, or <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:10.5px">blocked</code> — every write-capable action (config push, SSH commands, state-changing PowerShell, REST writes, deletes, restarts) is <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:10.5px">blocked</code> at the registry level, not just discouraged in a prompt</li>
+            <li>Output guardrails scan every AI response for unqualified destructive commands before it's ever shown, independent of the grounding check on the input side</li>
+            <li>Mission Control gives a live view of exactly which agent handled a request, what it retrieved, and how confident the retrieval was — replayable after the fact, not a black box</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:600;margin:2.5rem 0 1.25rem;color:var(--muted2)">Platform integrations</h3>
+
     <div class="integrations">
 
       <div class="int-card">
